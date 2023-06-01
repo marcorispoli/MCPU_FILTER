@@ -61,7 +61,7 @@ public:
 
 
     // Protocol commands
-    inline void requestBootloaderActivation(void) {if(bootloaderPresent) execCmd = ACTIVATE_BOOTLOADER;}
+    inline void requestBootloaderActivation(void) {if(isBootloaderPresent()) execCmd = ACTIVATE_BOOTLOADER;}
     inline void requestAbort(void){abortCmd = true;};
 
     inline canDeviceProtocolFrame::CAN_REGISTER_t getParam(uint8_t data){return deviceParamRegisters[data];};
@@ -73,7 +73,8 @@ public:
         else deviceDataRegisters[idx].d[data] = b;
     };
 
-
+    // Board initialization API
+    void boardInitialize(void);
 signals:
 
 
@@ -100,8 +101,7 @@ private:
     PROTOCOL_WORKFLOW_e workflow;
     uchar subWorkflow;
     uchar sequence;
-    bool  rxOk;
-    bool bootloaderPresent;
+
 
 
 
